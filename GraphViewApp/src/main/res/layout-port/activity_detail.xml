@@ -1,0 +1,19 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".DetailActivity"
+    android:id="@+id/layout"
+    android:orientation="horizontal">
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="match_parent"
+        class="com.gmatous.graph.GraphDetailFragment">
+        <!-- Preview: layout=@layout/details -->
+    </fragment>
+
+</LinearLayout>

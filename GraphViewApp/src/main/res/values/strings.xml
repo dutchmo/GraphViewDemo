@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">GraphDemo</string>
+    <string name="app_desc">GraphViewDemo</string>
+    <string name="title_item_detail">Item Detail</string>
+
+    <string-array name="graph_types">
+        <item >GraphView - Bar chart</item>
+        <item >GraphView - Line chart</item>
+        <item >Other</item>
+    </string-array>
+
+</resources>
