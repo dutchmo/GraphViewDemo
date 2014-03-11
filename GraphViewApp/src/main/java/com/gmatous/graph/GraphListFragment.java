@@ -11,6 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by gmatous on 1/3/14.
  */
@@ -32,7 +35,11 @@ public class GraphListFragment extends ListFragment{
                 "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
                 "Linux", "OS/2" };
         values=getResources().getStringArray(R.array.graph_types);
-
+        List<String> allTypes = new ArrayList();
+        for (GraphTypes type: GraphTypes.values()) {
+            allTypes.add(type.toString());
+        }
+        values = allTypes.toArray(new String [allTypes.size()]);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1, values);
         setListAdapter(adapter);
@@ -43,13 +50,13 @@ public class GraphListFragment extends ListFragment{
     public void onListItemClick(ListView l, View v, int position, long id) {
         final String item = (String) l.getItemAtPosition(position);
         // or l.getCheckedItemPosition();
-        updateDetail(item);
+        updateDetail(GraphTypes.valueOf(item));
         // TODO
 
     }
 
     public interface OnItemSelectedListener {
-        public void onGraphSelected(String link);
+        public void onGraphSelected(GraphTypes type);
     }
 
     @Override
@@ -65,8 +72,8 @@ public class GraphListFragment extends ListFragment{
 
 
     // May also be triggered from the Activity
-    public void updateDetail(String item) {
+    public void updateDetail(GraphTypes type) {
         // Send data to Activity
-        listener.onGraphSelected(item);
+        listener.onGraphSelected(type);
     }
 }

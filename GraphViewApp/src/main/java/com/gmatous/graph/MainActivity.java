@@ -9,17 +9,17 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity implements GraphListFragment.OnItemSelectedListener {
 
-    String currentGraphType = null;
+    GraphTypes currentGraphType = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        notify("onCreate");
+        //notify("onCreate");
     }
 
     @Override
-    public void onGraphSelected(String currentGraph) {
+    public void onGraphSelected(GraphTypes currentGraph) {
         GraphDetailFragment fragment = (GraphDetailFragment) getFragmentManager()
                 .findFragmentById(R.id.detailFragment);
 
@@ -30,7 +30,7 @@ public class MainActivity extends Activity implements GraphListFragment.OnItemSe
         else {
             Intent intent = new Intent(getApplicationContext(),
                     DetailActivity.class);
-            intent.putExtra(DetailActivity.EXTRA_URL, currentGraph);
+            intent.putExtra(DetailActivity.EXTRA_URL, currentGraph.toString());
             startActivity(intent);
         }
     }
@@ -38,7 +38,7 @@ public class MainActivity extends Activity implements GraphListFragment.OnItemSe
     @Override
     protected void onPause() {
         super.onPause();
-        notify("onPause");
+        //notify("onPause");
     }
 
     @Override
@@ -46,37 +46,38 @@ public class MainActivity extends Activity implements GraphListFragment.OnItemSe
         super.onResume();
         if (this.currentGraphType != null)
             onGraphSelected(this.currentGraphType);
-
-        notify("onResume");
+        //notify("onResume");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        notify("onStop");
+        //notify("onStop");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        notify("onDestroy");
+        //notify("onDestroy");
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        this.currentGraphType = savedInstanceState.getString("CURRENT_GRAPH_TYPE", this.currentGraphType);
+                String typeStr = savedInstanceState.getString("CURRENT_GRAPH_TYPE");
+        this.currentGraphType = GraphTypes.valueOf(typeStr);
         Toast.makeText(getApplicationContext(),
                 "Graph Type:" + this.currentGraphType, Toast.LENGTH_SHORT)
                 .show();
-        notify("onRestoreInstanceState");
+        //notify("onRestoreInstanceState");
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-     outState.putString("CURRENT_GRAPH_TYPE", this.currentGraphType);
-        notify("onSaveInstanceState");
+GraphTypes graphType = this.currentGraphType == null ? GraphTypes.DEFAULT : this.currentGraphType;
+     outState.putString("CURRENT_GRAPH_TYPE", graphType.toString());
+        //notify("onSaveInstanceState");
     }
 
     private void notify(String methodName) {
